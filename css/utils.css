@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Noto+Serif&family=Roboto:wght@300&display=swap');
+
+:root {
+    --my-font1: 'EB Garamond', serif;
+    --my-font2: 'Roboto', sans-serif;
+}
+
+.font1 {
+    font-family: var(--my-font1);
+}
+
+.font2 {
+    font-family: var(--my-font2);
+}
