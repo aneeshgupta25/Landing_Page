@@ -39,15 +39,17 @@ const data = new Array(
 )
 
 const nav_doc_fragment = document.createDocumentFragment();
-const content_doc_fragment = document.createDocumentFragment();
 let selected = "";
 
 function addHomeContent() {
+    const content_doc_fragment = document.createDocumentFragment();
     const container = document.createElement('div');    
+    container.style.cssText = "height: 100vh; overflow: inherit";
     container.style.backgroundImage = "url('../imgs/home_page.jpeg')"
     container.style.backgroundRepeat = "no-repeat"
-    container.style.backgroundSize = "cover"  
-    
+    container.style.backgroundSize = "cover"
+    container.style.boxShadow = "0px 0px 8px 8px white inset"       
+    container.id = "header_content"    
     //nav
     const nav_container = document.createElement("nav");
     const nav_left_container = document.createElement("div");
@@ -65,7 +67,7 @@ function addHomeContent() {
     //title
     const titleText = document.createElement("p");
     titleText.textContent = "Make Your Interior More"+'\n'+"Minimalistic & Modern"
-    titleText.style.cssText = "font-size: 80px; color: white; margin-top: 100px; text-align:center; white-space: pre"
+    titleText.style.cssText = "font-size: 80px; color: white; margin-top: 100px; white-space: pre"
     container.appendChild(titleText)
 
     //sub-title
@@ -75,11 +77,84 @@ function addHomeContent() {
     container.appendChild(sub_titleText)
 
     //dummy function for testing
-    addExtraComponentsForTesting(container)
+    // addExtraComponentsForTesting(container)
 
+    //search box
+    const search_container = document.createElement("div")
+    search_container.id = "search_container"
+    const search_content = document.createElement("form")
+    const input = document.createElement("input")    
+    input.id = "search_input"
+    input.placeholder = "Search Furniture"
+    //search button
+    const search_button = document.createElement("img")    
+    search_button.style.cssText = "height:auto; width:auto;"    
+    search_button.src = "../imgs/search.png"
+    search_content.appendChild(input)
+    search_container.appendChild(search_content)
+    search_container.appendChild(search_button)
+
+    container.appendChild(search_container);
     content_doc_fragment.appendChild(container)
     document.getElementById("header").appendChild(content_doc_fragment);
 
+}
+
+function addChoseUsContent() {
+    const choseUsDocFragment = document.createDocumentFragment();
+    const container = document.createElement('div');
+    container.id = "chose_us_container"
+    
+    const container1 = document.createElement('div');
+    const container1Content = document.createElement("p");
+    container1Content.textContent = "Why Choosing Us"
+    container1Content.style.cssText = "font-size: 30px;"
+    container1.appendChild(container1Content);
+    container.appendChild(container1)
+
+    //container-2
+    getChoseUsSection(container, "Luxury Facilities", "The advantage of hiring a workspace with us is that gives you comfortable service and all-around facilities.")
+    getChoseUsSection(container, "Luxury Facilities", "The advantage of hiring a workspace with us is that gives you comfortable service and all-around facilities.")
+    getChoseUsSection(container, "Luxury Facilities", "The advantage of hiring a workspace with us is that gives you comfortable service and all-around facilities.")
+
+    choseUsDocFragment.appendChild(container);
+    document.getElementById("content").appendChild(choseUsDocFragment);
+}
+
+function getChoseUsSection(main, text1, text2) {
+    const container = document.createElement("div");
+    const content1 = document.createElement("p");
+    content1.textContent = text1
+    container.appendChild(content1)
+    content1.style.cssText = "font-size: 20px;"
+    
+    const content2 = document.createElement("p");
+    content2.textContent = text2
+    container.appendChild(content2)
+    content2.style.cssText = "font-size: 15px; margin-top: 4%"
+    
+    const content3 = document.createElement("p");
+    content3.textContent = "More Info ->"
+    container.appendChild(content3)
+    content3.style.cssText = "font-size: 20px; margin-top: 4%; color: orange"
+
+    main.appendChild(container)
+}
+
+function addBestProducts() {
+    const container = document.createElement('div')
+    container.id = "best_products_container"
+    const heading = document.createElement('p')
+    heading.textContent = "Best Selling Product"
+    heading.style.cssText = "font-size: 30px; font-style: bold"
+    container.appendChild(heading);
+    
+    //products
+    const product_container = document.createElement('div');
+    product_container.id = 'product_items_container'
+    
+    
+    document.getElementById("content").appendChild(container)
 }
 
 function selectNavBar(current_selection) {
@@ -139,6 +214,8 @@ function populateEachSection(i) {
 
 //populate header content to content
 addHomeContent();
+addChoseUsContent();
+addBestProducts();
 
 
 //set scroll padding for navbar
@@ -161,7 +238,7 @@ document.getElementById("navigation_list").appendChild(nav_doc_fragment);
 selectNavBar(data[0].header);
 
 //listeners on navigation bar
-document.getElementById("navigation-right").addEventListener(
+document.getElementById("navigation_right").addEventListener(
     "click", function(event) {
         if(event.target.nodeName === 'LI') {
             selectNavBar(event.target.textContent)
@@ -175,6 +252,7 @@ document.addEventListener("scroll", function(event) {
     let min_dist = Infinity;
     let element = selected;
     for(let i = 0; i < data.length; i++) {
+        console.log(document.getElementById(data[i].header))
         let top = document.getElementById(data[i].header).getBoundingClientRect().top;        
         // console.log("element ", data[i].header, " top ", top)
         if(min_dist > Math.abs(top)) {
@@ -189,170 +267,10 @@ document.addEventListener("scroll", function(event) {
 
 
 function addExtraComponentsForTesting(container){
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-    var content = document.createElement('p');
-    content.textContent = "Hello"
-    container.appendChild(content)
-
+    for(let i = 0; i <= 300; i++) {
+        var content = document.createElement('p');
+        content.textContent = "Hello"
+        content.style.cssText = "color:white"
+        container.appendChild(content) 
+    }   
 }
