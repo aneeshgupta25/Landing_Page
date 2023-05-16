@@ -1,48 +1,40 @@
 class Section {
-    constructor(header, section_images, content) {
+    constructor(header, id) {
         this.header = header
-        this.section_images = section_images
-        this.content = content
+        this.id = id;        
     }
 }
 
 //data for the sections
 const data = new Array(
     new Section(
-        "Home1",
-        [],
-        ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",]
+        "Why Us?",
+        "chose_us_container",
     ),
     new Section(
-        "Home2",
-        [],
-        ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",]
+        "Best Products",
+        "best_products_container",
     ),
     new Section(
-        "Home3",
-        [],
-        ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",]
+        "Experiences",
+        "experience",
     ),
     new Section(
-        "Home4",
-        [],
-        ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non saepe mollitia numquam qui est harum voluptatibus quos sunt voluptatum. Possimus, voluptas? Culpa, sed.",]
-    )
+        "Materials",
+        "material",
+    ),
+    new Section(
+        "Reviews",
+        "testimonials",
+    ),
 )
 
+const content_doc_fragment = document.createDocumentFragment()
 const nav_doc_fragment = document.createDocumentFragment();
 let selected = "";
 
 function addHomeContent() {
-    const content_doc_fragment = document.createDocumentFragment();
+    const header_doc_fragment = document.createDocumentFragment();
     const container = document.createElement('div');    
     container.style.cssText = "height: 100vh; overflow: inherit";
     container.style.backgroundImage = "url('../imgs/home_page.jpeg')"
@@ -52,10 +44,10 @@ function addHomeContent() {
     container.id = "header_content"    
     //nav
     const nav_container = document.createElement("nav");
+    nav_container.classList.add("navigation");    
     const nav_left_container = document.createElement("div");
     const nav_right_container = document.createElement("div");
     const nav_ul = document.createElement("ul");
-    nav_container.classList.add("navigation");    
     nav_left_container.id = "navigation_left";
     nav_right_container.id = "navigation_right";    
     nav_ul.id = "navigation_list";
@@ -63,6 +55,16 @@ function addHomeContent() {
     nav_container.appendChild(nav_left_container);
     nav_container.appendChild(nav_right_container);
     container.appendChild(nav_container);
+
+    //populate the navigation bar with dynamic section values
+    for(let i = 0; i < data.length; i++) {
+        const nav_list_item = document.createElement('li');
+        nav_list_item.id = data[i].id;
+        nav_list_item.textContent = data[i].header;
+        nav_list_item.classList.add("unselected");
+        nav_doc_fragment.appendChild(nav_list_item);         
+    }
+    nav_ul.appendChild(nav_doc_fragment);
     
     //title
     const titleText = document.createElement("p");
@@ -75,9 +77,6 @@ function addHomeContent() {
     sub_titleText.textContent = "Turn your room with panto into a lot more minimalist\nand modern with ease and speed"
     sub_titleText.style.cssText = "font-size: 24px; color: white; margin-top: 30px; font-style: italic;text-align:center; white-space: pre"
     container.appendChild(sub_titleText)
-
-    //dummy function for testing
-    // addExtraComponentsForTesting(container)
 
     //search box
     const search_container = document.createElement("div")
@@ -95,15 +94,19 @@ function addHomeContent() {
     search_container.appendChild(search_button)
 
     container.appendChild(search_container);
-    content_doc_fragment.appendChild(container)
-    document.getElementById("header").appendChild(content_doc_fragment);
+
+    //dummy function for testing
+    // addExtraComponentsForTesting(container)
+
+    header_doc_fragment.appendChild(container)
+    document.getElementById("header").appendChild(header_doc_fragment);
 
 }
 
 function addChoseUsContent() {
     const choseUsDocFragment = document.createDocumentFragment();
     const container = document.createElement('div');
-    container.id = "chose_us_container"
+    container.id = "chose_us_container_helper"
     
     const container1 = document.createElement('div');
     const container1Content = document.createElement("p");
@@ -118,7 +121,7 @@ function addChoseUsContent() {
     getChoseUsSection(container, "Luxury Facilities", "The advantage of hiring a workspace with us is that gives you comfortable service and all-around facilities.")
 
     choseUsDocFragment.appendChild(container);
-    document.getElementById("content").appendChild(choseUsDocFragment);
+    content_doc_fragment.appendChild(choseUsDocFragment)    
 }
 
 function getChoseUsSection(main, text1, text2) {
@@ -142,19 +145,229 @@ function getChoseUsSection(main, text1, text2) {
 }
 
 function addBestProducts() {
-    const container = document.createElement('div')
-    container.id = "best_products_container"
+    const container = document.createElement('div')    
+    container.id = "best_products_container_helper"
+    // container.classList.add("grey_background_color")
     const heading = document.createElement('p')
     heading.textContent = "Best Selling Product"
-    heading.style.cssText = "font-size: 30px; font-style: bold"
+    heading.style.cssText = "font-size: 30px; text-align: center"
     container.appendChild(heading);
     
     //products
     const product_container = document.createElement('div');
     product_container.id = 'product_items_container'
+    product_container.classList.add("grid_container")
+    addProductItem(product_container, "Chair", "Most Amazingg Chair", "$400", "prd1.png", 5);
+    addProductItem(product_container, "Chair", "Good Chair", "$380", "prd2.png", 3);
+    addProductItem(product_container, "Chair", "Hello Chairrr", "$390", "prd3.png", 4);
+    addProductItem(product_container, "Chair", "Cool Chair", "$370", "prd4.png", 3);    
     
+    container.appendChild(product_container)
+    content_doc_fragment.appendChild(container)    
+}
+
+function addProductItem(main, text1, text2, text3, img, rating) {
+    const container = document.createElement('div');
+    container.classList.add("product_item")
+    const prod_image_container = document.createElement('div');
+    const prod_info_container = document.createElement('div');
+    prod_info_container.classList.add("product_item_info")
+    prod_image_container.style.cssText = "background_color: #fafafa"
+    prod_info_container.style.cssText = "background_color: #ffffff"
     
-    document.getElementById("content").appendChild(container)
+    const prod_image = document.createElement('img');
+    prod_image.src = `../imgs/${img}`
+    prod_image.classList.add("image")
+
+    const info1 = document.createElement('p');
+    info1.textContent = text1;
+    const info2 = document.createElement('p');
+    info2.textContent = text2;
+    const info3 = document.createElement('p');
+    info3.textContent = text3;
+
+    const add_img = document.createElement('img');
+    add_img.src = "../imgs/add_prd.png"
+    add_img.style.cssText = "width: auto; height: 40%;"
+
+    const rating_img_container = showRating(rating)
+    
+    add_img.src = "../imgs/add_prd.png"
+    add_img.style.cssText = "width: auto; height: 40%;"
+
+    prod_image_container.appendChild(prod_image)
+    prod_info_container.appendChild(info1)
+    prod_info_container.appendChild(info2)
+    prod_info_container.appendChild(info3)
+    prod_info_container.appendChild(rating_img_container)
+    prod_info_container.appendChild(add_img)
+
+    container.appendChild(prod_image_container)
+    container.appendChild(prod_info_container)
+    main.appendChild(container)
+    
+}
+
+function addExperiences() {
+    commonDesignContent("experience_helper", "common_content0", "experience.png", "Experiences", "We Provide You The Best Experience", "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat culpa numquam iusto iure maxime repellendus vero provident aspernatur cumque sit.", 0)   
+}
+
+function addMaterials() {
+    commonDesignContent("material_helper", "common_content1", "materials.png", "Materials", "Funny Materials for Making Furniture", "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat culpa numquam iusto iure maxime repellendus vero provident aspernatur cumque sit.", 1)   
+}
+
+function commonDesignContent(id, className, img, text1, text2, text3, num) {
+    const container = document.createElement('div');    
+    container.id = id
+    container.classList.add("common_content")
+    // container.classList.add("common_content_text")
+    container.classList.add(className)
+    const image = document.createElement('img');
+    image.src = `../imgs/${img}`
+    image.classList.add("common_content_img")
+    image.style.cssText = 'width: auto, height: 100%'
+    if(num%2==0) {
+        container.appendChild(image)
+        container.appendChild(fillContentHelper(text1, text2, text3))
+    } else {
+        container.appendChild(fillContentHelper(text1, text2, text3))
+        container.appendChild(image)
+    }
+    content_doc_fragment.appendChild(container)
+}
+
+function fillContentHelper(text1, text2, text3) {
+    const container = document.createElement('div');
+    container.classList.add("common_content_text")
+    const content1 = document.createElement('p');
+    content1.classList.add("common_content_category")
+    console.log(content1.classList)
+    content1.textContent = text1
+    const content2 = document.createElement('p');
+    content2.classList.add("common_content_title")
+    content2.textContent = text2
+    const content3 = document.createElement('p');
+    content3.classList.add("common_content_text")
+    content3.textContent = text3
+    const content4 = document.createElement('p');
+    content4.classList.add("common_content_more_info")
+    content4.textContent = 'More Info ->'
+
+    container.appendChild(content1)
+    container.appendChild(content2)
+    container.appendChild(content3)
+    container.appendChild(content4)
+
+    return container;
+
+}
+
+function addTestimonials() {
+    const container = document.createElement('div');
+    container.id = "testimonials_helper"
+    const category_text = document.createElement('p');
+    category_text.textContent = "Testimonials"
+    category_text.classList.add("common_content_category");
+    category_text.style.cssText = "text-align: center"
+    container.appendChild(category_text)
+    
+    const title_text = document.createElement('p');
+    title_text.textContent = "Our Client Reviews"
+    title_text.classList.add("common_content_title");
+    title_text.style.cssText = "text-align: center"
+    container.appendChild(title_text)
+
+    const testimonials_container = document.createElement('div')
+    testimonials_container.classList.add("grid_container");
+    for(let i = 0; i < 4; i++) {
+        testimonials_container.appendChild(createTestimonial('testimonial1.png', 'Bang Upin', 'Pedagang Asongan', '“Hello, This is Awesome!! I am feeling so good today!! :)“', 4));
+    }        
+    container.appendChild(testimonials_container)
+    content_doc_fragment.appendChild(container)
+}
+
+function createTestimonial(img, text1, text2, text3, rating) {
+    const container = document.createElement('div');
+    container.style.cssText = "position:relative"
+    const image = document.createElement('img');
+    image.src = `../imgs/${img}`
+    image.classList.add("image");
+    container.appendChild(image)
+
+    const review_container = document.createElement('div');
+    review_container.classList.add("review_container")
+
+    const content1 = document.createElement('p');
+    content1.classList.add('reviewer')
+    content1.textContent = text1
+    const content2 = document.createElement('p');
+    content2.textContent = text2    
+    const content3 = document.createElement('p');
+    content3.textContent = text3
+    content3.style.cssText = "text-align: center"
+
+    const rating_img_container = showRating(rating)
+    review_container.appendChild(content1)
+    review_container.appendChild(content2)
+    review_container.appendChild(content3)
+    review_container.appendChild(rating_img_container)
+
+    container.appendChild(review_container)
+
+    return container;
+}
+
+function addContactUs() {
+    const container = document.createElement('div');
+    container.id = "contact_helper"
+    const grid_container = document.createElement('div');
+    grid_container.classList.add("grid_container");
+    const container1 = document.createElement('div');
+    container1.classList.add("contact_list_container");
+    const heading = document.createElement('p');
+    heading.textContent = "ANEESH GUPTA..."
+    heading.style.cssText = "font-size: 25px; font-weight: bold; text-align: center "    
+
+    const content = document.createElement('p');
+    content.textContent = "The advantage of hiring a workspace with us is that givees you comfortable service and all-around facilities."
+    content.style.cssText = "text-align: center"
+
+    container1.appendChild(heading);
+    container1.appendChild(content);
+    container.appendChild(container1)    
+
+    grid_container.append(addList('Services', ['Email Marketing', 'Careers', 'Campaigns', 'Branding', 'Market', 'Scenarios']))
+    grid_container.append(addList('Furniture', ['Tables', 'Chairs', 'All']))
+    grid_container.append(addList('Follow Us', ['Facebook', 'Twitter', 'Instagram']))
+
+
+    //add copyrights
+    const copyrights = document.createElement('p');
+    copyrights.textContent = 'Copyrights' + '\u00A9' + ' ANEESH GUPTA'
+    copyrights.style.cssText = 'text-align: center; margin-bottom: 20px'
+    
+    container.appendChild(grid_container)
+    container.appendChild(copyrights)
+    content_doc_fragment.appendChild(container)
+}
+
+function addList(context, list_details) {
+    const container = document.createElement('div');
+    container.classList.add("contact_list_container")
+    const heading = document.createElement('p')
+    heading.classList.add("contact_list_heading")
+    heading.textContent = context
+    container.appendChild(heading)
+
+    const list = document.createElement('ul');
+    list.classList.add('contact_section_list')
+    for(let i = 0; i < list_details.length; i++) {
+        const list_item = document.createElement('li')        
+        list_item.textContent = list_details[i];
+        list.appendChild(list_item)
+    }
+    container.appendChild(list);
+    return container;
 }
 
 function selectNavBar(current_selection) {
@@ -168,22 +381,44 @@ function selectNavBar(current_selection) {
 
 function unselectOldSelection(val) {
     if(val === "") return;
-    const old_selected = document.getElementById(val+"_header");
+    const old_selected = document.getElementById(val);
+    document.getElementById(val+"_helper").classList.remove('selected_animate')   
+    document.getElementById(val+"_helper").classList.add('unselected_animate')   
     old_selected.classList.remove("selected"); 
     old_selected.classList.add("unselected");
 }
 
 function selectNewSelection(val) {
-    const new_selection = document.getElementById(val+"_header");     
+    const new_selection = document.getElementById(val);  
+    document.getElementById(val+"_helper").classList.add('selected_animate')   
+    document.getElementById(val+"_helper").classList.remove('unselected_animate')   
     // console.log(new_selection)
     new_selection.classList.remove("unselected");
     new_selection.classList.add("selected");
 }
 
+function showRating(rating) {
+    const rating_img_container = document.createElement('div');
+    rating_img_container.classList.add("rating_container")
+    let num = 1;
+    while(num <= 5) {
+        const rating_img = document.createElement('img');
+        if(rating > 0) {
+            rating_img.src = '../imgs/rate.png'
+            rating--;
+        } else {
+            rating_img.src = '../imgs/non-rate.png'
+        }
+        num++;
+        rating_img_container.appendChild(rating_img);
+    }
+    return rating_img_container
+}
+
 function populateEachSection(i) {
     const container = document.createElement('div');
     //add h3 to include header of the section
-    container.id = data[i].header;
+    container.id = data[i].id;
     const section_header = document.createElement('h3');
     section_header.textContent = data[i].header;
     container.appendChild(section_header);
@@ -216,33 +451,28 @@ function populateEachSection(i) {
 addHomeContent();
 addChoseUsContent();
 addBestProducts();
-
+addExperiences();
+addMaterials();
+addTestimonials();
+addContactUs();
+document.getElementById("content").appendChild(content_doc_fragment);
+// select first section of navbar as default
+selectNavBar(data[0].id);
 
 //set scroll padding for navbar
 const navbarHeight = document.querySelector('.navigation').offsetHeight;
-document.documentElement.style.setProperty('--scroll-padding', navbarHeight + 1 + "px");
+document.documentElement.style.setProperty('--scroll-padding', navbarHeight + 30 + "px");
 
-
-//populate the navigation bar with dynamic section values
-for(let i = 0; i < data.length; i++) {
-    const nav_list_item = document.createElement('li');
-    nav_list_item.id = data[i].header + "_header";
-    nav_list_item.textContent = data[i].header;
-    nav_list_item.classList.add("unselected");
-    nav_doc_fragment.appendChild(nav_list_item);         
-}
-document.getElementById("navigation_list").appendChild(nav_doc_fragment);
 // document.getElementById("content").appendChild(content_doc_fragment);
 
-//select first section of navbar as default
-selectNavBar(data[0].header);
 
 //listeners on navigation bar
 document.getElementById("navigation_right").addEventListener(
     "click", function(event) {
+        console.log(navbarHeight)
         if(event.target.nodeName === 'LI') {
-            selectNavBar(event.target.textContent)
-            document.getElementById(event.target.textContent).scrollIntoView();
+            selectNavBar(event.target.id)
+            document.getElementById(event.target.id + "_helper").scrollIntoView();
         }
     }
 );
@@ -252,19 +482,16 @@ document.addEventListener("scroll", function(event) {
     let min_dist = Infinity;
     let element = selected;
     for(let i = 0; i < data.length; i++) {
-        console.log(document.getElementById(data[i].header))
-        let top = document.getElementById(data[i].header).getBoundingClientRect().top;        
-        // console.log("element ", data[i].header, " top ", top)
+        // console.log(document.getElementById(data[i].id))        
+        let top = document.getElementById(data[i].id + "_helper").getBoundingClientRect().top
         if(min_dist > Math.abs(top)) {
             min_dist = Math.abs(top);
-            element = data[i].header;
+            element = data[i].id;
         }        
     }
     // console.log("Element ", element);
     selectNavBar(element);    
 });
-
-
 
 function addExtraComponentsForTesting(container){
     for(let i = 0; i <= 300; i++) {
