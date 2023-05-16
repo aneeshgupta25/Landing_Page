@@ -13,3 +13,35 @@
 .font2 {
     font-family: var(--my-font2);
 }
+
+.height-1 {
+    font-size: 80px;
+}
+
+.height-2 {
+    font-size: 40px;
+}
+
+.height-3 {
+    font-size: 25px;
+}
+
+.height-4 {
+    font-size: 20px;
+}
+
+.height-5 {
+    font-size: 15px;
+}
+
+.bold-text {
+    font-weight: bolder;
+}
+
+.wcolor {
+    color: white;
+}
+
+.ocolor {
+    color: orange;
+}
