@@ -25,7 +25,7 @@ function addHomeContent() {
     //hamburger
     const hamburger_image = document.createElement('img')
     hamburger_image.id = "hamburger"
-    hamburger_image.src = "../imgs/hamburger.png"
+    hamburger_image.src = "./imgs/hamburger.png"
     nav_container.appendChild(hamburger_image)
 
 
