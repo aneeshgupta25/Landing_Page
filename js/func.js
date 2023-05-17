@@ -2,7 +2,7 @@ function addHomeContent() {
     const header_doc_fragment = document.createDocumentFragment();
     const container = document.createElement('div');    
     container.style.cssText = "height: 100vh; overflow: inherit";
-    container.style.backgroundImage = "url('../imgs/home_page.jpeg')"
+    container.style.backgroundImage = "url('./imgs/home_page.jpeg')"
     container.style.backgroundRepeat = "no-repeat"
     container.style.backgroundSize = "cover"
     container.style.boxShadow = "0px 0px 8px 8px white inset"       
@@ -25,7 +25,7 @@ function addHomeContent() {
     //hamburger
     const hamburger_image = document.createElement('img')
     hamburger_image.id = "hamburger"
-    hamburger_image.src = "../imgs/hamburger.png"
+    hamburger_image.src = "./imgs/hamburger.png"
     nav_container.appendChild(hamburger_image)
 
 
@@ -64,7 +64,7 @@ function addHomeContent() {
     //search button
     const search_button = document.createElement("img")    
     search_button.style.cssText = "height:auto; width:auto;"    
-    search_button.src = "../imgs/search.png"
+    search_button.src = "./imgs/search.png"
     search_content.appendChild(input)
     search_container.appendChild(search_content)
     search_container.appendChild(search_button)
@@ -151,7 +151,7 @@ function addProductItem(main, text1, text2, text3, img, rating) {
     prod_info_container.style.cssText = "background_color: #ffffff"
     
     const prod_image = document.createElement('img');
-    prod_image.src = `../imgs/${img}`
+    prod_image.src = `./imgs/${img}`
     prod_image.classList.add("image")
 
     const info1 = document.createElement('p');
@@ -165,12 +165,12 @@ function addProductItem(main, text1, text2, text3, img, rating) {
     info3.classList.add("height-4", "bold-text", "font1")
 
     const add_img = document.createElement('img');
-    add_img.src = "../imgs/add_prd.png"
+    add_img.src = "./imgs/add_prd.png"
     add_img.style.cssText = "width: auto; height: 40%;"
 
     const rating_img_container = showRating(rating)
     
-    add_img.src = "../imgs/add_prd.png"
+    add_img.src = "./imgs/add_prd.png"
     add_img.style.cssText = "width: auto; height: 40%;"
 
     prod_image_container.appendChild(prod_image)
@@ -201,7 +201,7 @@ function commonDesignContent(id, className, img, text1, text2, text3, num) {
     // container.classList.add("common_content_text")
     container.classList.add(className)
     const image = document.createElement('img');
-    image.src = `../imgs/${img}`
+    image.src = `./imgs/${img}`
     image.classList.add("common_content_img")
     image.style.cssText = 'width: auto, height: 100%'
     if(num%2==0) {
@@ -268,7 +268,7 @@ function createTestimonial(img, text1, text2, text3, rating) {
     const container = document.createElement('div');
     container.style.cssText = "position:relative"
     const image = document.createElement('img');
-    image.src = `../imgs/${img}`
+    image.src = `./imgs/${img}`
     image.classList.add("image");
     container.appendChild(image)
 
@@ -383,10 +383,10 @@ function showRating(rating) {
     while(num <= 5) {
         const rating_img = document.createElement('img');
         if(rating > 0) {
-            rating_img.src = '../imgs/rate.png'
+            rating_img.src = './imgs/rate.png'
             rating--;
         } else {
-            rating_img.src = '../imgs/non-rate.png'
+            rating_img.src = './imgs/non-rate.png'
         }
         num++;
         rating_img_container.appendChild(rating_img);
@@ -402,7 +402,7 @@ function populateEachSection(i) {
     section_header.textContent = data[i].header;
     container.appendChild(section_header);
 
-    container.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url('../imgs/sample.jpg')"
+    container.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url('./imgs/sample.jpg')"
     container.style.backgroundRepeat = "no-repeat"
     container.style.backgroundSize = "cover"  
      
@@ -415,7 +415,7 @@ function populateEachSection(i) {
         section_content.textContent = data[i].content[j];
         inner_container.appendChild(section_content);        
 
-        section_image.src = "../imgs/sample.jpg";
+        section_image.src = "./imgs/sample.jpg";
         //insert image as the first child or last child accordingly
         if(j%2 == 0)
             inner_container.insertBefore(section_image, inner_container.firstChild);
